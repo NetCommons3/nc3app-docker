@@ -1,0 +1,48 @@
+version: '3'
+services:
+#    php:
+#        container_name: php
+##        image: php:${PHP_VERSION}-cli
+#        build:
+##            dockerfile: ./php/${PHP_VERSION}/Dockerfile
+#            context: ./php/${PHP_VERSION}
+##            context: .
+##        depends_on:
+##          - nc3mod
+#        tty: true
+#        volumes:
+#          - ./bin:/opt/nc3bin
+#          - ./scripts:/opt/scripts
+##        command: bash -c 'bash /opt/scripts/start-on-docker.sh && bash'
+##        command: /bin/bash -c "ln -s /usr/local/bin /opt/nc3bin/php"
+#    db:
+#        container_name: "mysql5.7"
+#        image: mysql:5.7
+#        environment:
+#          MYSQL_DATABASE: cake_test
+#          MYSQL_ROOT_PASSWORD: root
+#        expose:
+#          - "13306"
+#        ports:
+#          - "13306:3306"
+#        command: --port 13306
+##        volumes:
+##          - db-store:/var/lib/mysql
+    nc3app:
+        container_name: "nc3app-${PHP_VERSION}"
+        #image: nc3app-php7.2:latest
+        build:
+#            dockerfile: ./php/${PHP_VERSION}/Dockerfile
+#            context: ./php/${PHP_VERSION}
+            context: .
+            args:
+              - PHP_VERSION=${PHP_VERSION}
+#        depends_on:
+#          - db
+        volumes:
+#          - ./mysql/my.cnf:/etc/my.cnf:ro
+          - ./scripts:/opt/scripts
+        tty: true
+        command: bash -c 'bash /opt/scripts/start-on-docker.sh && bash'
+#volumes:
+#  db-store:
