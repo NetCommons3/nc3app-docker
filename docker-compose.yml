@@ -29,4 +29,4 @@ services:
         volumes:
             - ${PLUGIN_BUILD_DIR}:/opt/plugin
         #tty: true
-        #command: bash -c 'bash /opt/scripts/start-on-docker.sh && bash'
+        command: bash -c 'bash /opt/scripts/start-on-docker.sh && bash'
