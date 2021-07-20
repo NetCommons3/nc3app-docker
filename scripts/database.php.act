@@ -1,0 +1,55 @@
+<?php
+/**
+ * DATABASE_CONFIG
+ *
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
+ * @codingStandardsIgnoreFile
+ * @codeCoverageIgnore
+ **/
+
+class DATABASE_CONFIG {
+
+	public $master = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'db_01',
+		'port' => '3306',
+		'login' => 'root',
+		'password' => 'root',
+		'database' => 'cakephp_test',
+		'prefix' => '',
+		'settings' => [
+			'@@SESSION.sql_mode' => "''",
+		],
+	);
+
+	public $slave1 = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'db_01',
+		'port' => '3306',
+		'login' => 'root',
+		'password' => 'root',
+		'database' => 'cakephp_test',
+		'prefix' => '',
+		'settings' => [
+			'@@SESSION.sql_mode' => "''",
+		],
+	);
+
+	public $test = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'db_01',
+		'port' => '3306',
+		'login' => 'root',
+		'password' => 'root',
+		'database' => 'cakephp_test',
+		'prefix' => '',
+		'settings' => [
+			'@@SESSION.sql_mode' => "''",
+		],
+	);
+}

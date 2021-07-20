@@ -46,6 +46,7 @@ php${PHP_VERSION}-mbstring php${PHP_VERSION}-gd php-pear php${PHP_VERSION}-mysql
 php${PHP_VERSION}-xdebug php${PHP_VERSION}-intl php${PHP_VERSION}-zip php${PHP_VERSION}-xmlrpc \
 php${PHP_VERSION}-xml php${PHP_VERSION}-imagick php${PHP_VERSION}-cli
 
+RUN ls -l /etc/php/${PHP_VERSION}/cli/conf.d/
 RUN php -v
 
 # composerのインストール
@@ -53,6 +54,39 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 RUN composer self-update --1
 
-# mysqlのインストール
-RUN apt-get -y install mysql-server-5.7 mysql-client-5.7
-RUN mysql --version
+## mysqlのインストール
+#RUN apt-get -y install mysql-server-5.7 mysql-client-5.7
+#RUN mysql --version
+
+# gjslintのインストール
+RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+RUN python2 get-pip.py
+RUN pip --version
+RUN pip install six
+RUN pip install https://github.com/NetCommons3/NetCommons3/raw/master/tools/build/plugins/cakephp/travis/v2.3.19.tar.gz
+RUN which gjslint
+
+# phpmdのセットアップ
+RUN apt-get -y install wget
+RUN mkdir /opt/phpmd
+RUN wget https://raw.githubusercontent.com/NetCommons3/chef_boilerplate_php/master/files/default/build/cakephp/phpmd/rules.xml -O /opt/phpmd/rules.xml
+
+# Test Scriptのコピー
+RUN mkdir /opt/scripts
+COPY ./scripts/* /opt/scripts/
+
+RUN mkdir /opt/scripts/test
+COPY ./scripts/test/* /opt/scripts/test/
+
+# NetCommons3 setup
+RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3 && \
+cd /opt/nc3 && \
+rm composer.lock && \
+composer remove --no-update netcommons/install && \
+composer config minimum-stability dev && \
+composer config repositories.0 git https://github.com/NetCommons3/migrations.git && \
+composer config repositories.1 git https://github.com/NetCommons3/cakephp-upload.git && \
+composer require --no-update netcommons/net-commons && \
+composer install --no-scripts --no-ansi --no-interaction && \
+composer require --no-update netcommons/install && \
+git checkout composer.lock

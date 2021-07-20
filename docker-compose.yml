@@ -1,48 +1,32 @@
 version: '3'
 services:
-#    php:
-#        container_name: php
-##        image: php:${PHP_VERSION}-cli
-#        build:
-##            dockerfile: ./php/${PHP_VERSION}/Dockerfile
-#            context: ./php/${PHP_VERSION}
-##            context: .
-##        depends_on:
-##          - nc3mod
-#        tty: true
-#        volumes:
-#          - ./bin:/opt/nc3bin
-#          - ./scripts:/opt/scripts
-##        command: bash -c 'bash /opt/scripts/start-on-docker.sh && bash'
-##        command: /bin/bash -c "ln -s /usr/local/bin /opt/nc3bin/php"
-#    db:
-#        container_name: "mysql5.7"
-#        image: mysql:5.7
-#        environment:
-#          MYSQL_DATABASE: cake_test
-#          MYSQL_ROOT_PASSWORD: root
-#        expose:
-#          - "13306"
-#        ports:
-#          - "13306:3306"
-#        command: --port 13306
-##        volumes:
-##          - db-store:/var/lib/mysql
+    # php-mysqlがあれば、phpイメージからアクセス可になる。
+    # phpイメージからmysqlコマンドをたたくなら、phpイメージにmysqlクライアント入れる必要
+    db_01:
+        #container_name: "db_01"
+        image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: ${MYSQL_DATABASE}
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        # ホストからアクセスの時に指定する。Docker間では、独自のネットワークを構築するため3306のポートで接続可能
+        #ports:
+        #  - "13306:3306"
     nc3app:
-        container_name: "nc3app-${PHP_VERSION}"
-        #image: nc3app-php7.2:latest
-        build:
-#            dockerfile: ./php/${PHP_VERSION}/Dockerfile
-#            context: ./php/${PHP_VERSION}
-            context: .
-            args:
-              - PHP_VERSION=${PHP_VERSION}
-#        depends_on:
-#          - db
+        #container_name: "nc3app"
+        image: netcommons3/nc3app-php${PHP_VERSION}:latest
+        #build:
+        #    context: .
+        #    args:
+        #      - PHP_VERSION=${PHP_VERSION}
+        environment:
+            NC3_BUILD_DIR: ${NC3_BUILD_DIR}
+            NC3_GIT_URL: ${NC3_GIT_URL}
+            NC3_GIT_BRANCH: ${NC3_GIT_BRANCH}
+            PLUGIN_BUILD_DIR: ${PLUGIN_BUILD_DIR}
+            PHP_VERSION: ${PHP_VERSION}
+        depends_on:
+            - db_01
         volumes:
-#          - ./mysql/my.cnf:/etc/my.cnf:ro
-          - ./scripts:/opt/scripts
-        tty: true
-        command: bash -c 'bash /opt/scripts/start-on-docker.sh && bash'
-#volumes:
-#  db-store:
+            - ${PLUGIN_BUILD_DIR}:/opt/plugin
+        #tty: true
+        #command: bash -c 'bash /opt/scripts/start-on-docker.sh && bash'
