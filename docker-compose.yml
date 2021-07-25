@@ -28,5 +28,6 @@ services:
             - db_01
         volumes:
             - ${PLUGIN_BUILD_DIR}:/opt/plugin
+            - /opt/coveralls:/opt/coveralls
         tty: true
         #command: bash -c '/bin/bash'
