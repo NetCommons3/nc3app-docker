@@ -24,7 +24,6 @@ services:
             NC3_GIT_BRANCH: ${NC3_GIT_BRANCH}
             PLUGIN_BUILD_DIR: ${PLUGIN_BUILD_DIR}
             PHP_VERSION: ${PHP_VERSION}
-            COVERALLS_REPO_TOKEN: ${{ env.COVERALLS_REPO_TOKEN }}
         depends_on:
             - db_01
         volumes:
