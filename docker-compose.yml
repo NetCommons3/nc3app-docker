@@ -28,6 +28,7 @@ services:
             - db_01
         volumes:
             - ${PLUGIN_BUILD_DIR}:/opt/plugin
+            - ${NC3_BUILD_DIR}:${NC3_BUILD_DIR}
             - /opt/coveralls:/opt/coveralls
         tty: true
         #command: bash -c '/bin/bash'
