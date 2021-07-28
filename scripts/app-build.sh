@@ -6,7 +6,7 @@
 
 cd $NC3_BUILD_DIR
 cp -rpf /opt/nc3.dist/app ./
-#cp -rpf /opt/nc3.dist/vendors ./
+cp -rpf /opt/nc3.dist/vendors ./
 
 echo "PLUGIN_BUILD_DIR=${PLUGIN_BUILD_DIR}"
 
@@ -22,7 +22,7 @@ cd $NC3_BUILD_DIR
 
 # NetCommons3 project install
 rm composer.lock
-#composer clear-cache
+composer clear-cache
 composer remove --no-update netcommons/install
 composer config minimum-stability dev
 composer config repositories.0 git https://github.com/NetCommons3/migrations.git
