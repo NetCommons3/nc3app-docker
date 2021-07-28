@@ -21,6 +21,7 @@ echo "Configure::write('NetCommons.installed', true);" >> ./app/Config/core.php
 
 app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME \
 --configuration phpunit.xml.dist \
+--coverage-clover build/logs/clover.xml \
 --stderr
 
 ret=$?
