@@ -19,10 +19,10 @@ echo "Configure::write('Security.salt', 'ForTravis');" >> ./app/Config/core.php
 echo "Configure::write('Security.cipherSeed', '999');" >> ./app/Config/core.php
 echo "Configure::write('NetCommons.installed', true);" >> ./app/Config/core.php
 
-app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME \
---configuration phpunit.xml.dist \
---coverage-clover build/logs/clover.xml \
---stderr
+
+echo "app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover build/logs/clover.xml --stderr"
+
+app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover build/logs/clover.xml --stderr
 
 ret=$?
 if [ $ret -eq 0 ]; then
