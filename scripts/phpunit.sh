@@ -25,6 +25,8 @@ app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover --stderr
 ret=$?
 if [ $ret -eq 0 ]; then
 	ls -l build/logs/
+	cat /opt/covarage.txt
+
     echo "Success phpunit."
 else
     echo "Failure phpunit."
