@@ -48,7 +48,7 @@ echo "composer --version"
 composer --version
 echo ""
 
-php /opt/scripts/test/phpinfo.php
+#php /opt/scripts/test/phpinfo.php
 php /opt/scripts/test/imagick.php
 php /opt/scripts/test/xdebug.php
 php /opt/scripts/test/mysql.php
