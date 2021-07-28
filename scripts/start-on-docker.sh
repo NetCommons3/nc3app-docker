@@ -29,6 +29,10 @@ echo "php -v"
 php -v
 echo ""
 
+echo "php -i"
+php -i
+echo ""
+
 #mysql --version
 #echo ""
 
