@@ -22,7 +22,7 @@ echo "Configure::write('Security.salt', 'ForTravis');" >> ./app/Config/core.php
 echo "Configure::write('Security.cipherSeed', '999');" >> ./app/Config/core.php
 echo "Configure::write('NetCommons.installed', true);" >> ./app/Config/core.php
 
-XDEBUG_MODE=coverage app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover --stderr
+app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover --stderr
 
 ret=$?
 if [ $ret -eq 0 ]; then

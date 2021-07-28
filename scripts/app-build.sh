@@ -6,7 +6,7 @@
 
 cd $NC3_BUILD_DIR
 cp -rpf /opt/nc3.dist/app ./
-cp -rpf /opt/nc3.dist/vendors ./
+#cp -rpf /opt/nc3.dist/vendors ./
 
 echo "PLUGIN_BUILD_DIR=${PLUGIN_BUILD_DIR}"
 
