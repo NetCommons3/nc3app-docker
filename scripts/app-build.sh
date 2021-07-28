@@ -4,16 +4,9 @@
 # git clone NetCommons3
 #-----------------------
 
-#if [ -d $NC3_BUILD_DIR ]; then
-#  rm -Rf $NC3_BUILD_DIR
-#fi
-if [ ! -d $NC3_BUILD_DIR ]; then
-  git clone -b $NC3_GIT_BRANCH $NC3_GIT_URL $NC3_BUILD_DIR
-  cd $NC3_BUILD_DIR
-else
-  cd $NC3_BUILD_DIR
-  git checkout -b $NC3_GIT_BRANCH
-fi
+cd $NC3_BUILD_DIR
+cp -rpf /opt/nc3.dist/app ./
+cp -rpf /opt/nc3.dist/vendors ./
 
 echo "PLUGIN_BUILD_DIR=${PLUGIN_BUILD_DIR}"
 

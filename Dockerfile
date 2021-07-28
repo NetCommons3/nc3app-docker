@@ -72,15 +72,15 @@ RUN mkdir /opt/phpmd
 RUN wget https://raw.githubusercontent.com/NetCommons3/chef_boilerplate_php/master/files/default/build/cakephp/phpmd/rules.xml -O /opt/phpmd/rules.xml
 
 # Test Scriptのコピー
-RUN mkdir /opt/scripts
-COPY ./scripts/* /opt/scripts/
-
-RUN mkdir /opt/scripts/test
-COPY ./scripts/test/* /opt/scripts/test/
+#RUN mkdir /opt/scripts
+#COPY ./scripts/* /opt/scripts/
+#
+#RUN mkdir /opt/scripts/test
+#COPY ./scripts/test/* /opt/scripts/test/
 
 # NetCommons3 setup
-RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3 && \
-cd /opt/nc3 && \
+RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist && \
+cd /opt/nc3.dist && \
 rm composer.lock && \
 composer remove --no-update netcommons/install && \
 composer config minimum-stability dev && \

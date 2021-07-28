@@ -29,6 +29,6 @@ services:
         volumes:
             - ${PLUGIN_BUILD_DIR}:/opt/plugin
             - ${NC3_BUILD_DIR}:${NC3_BUILD_DIR}
-            - /opt/coveralls:/opt/coveralls
+            - ${NC3_DOCKER_DIR}/scripts:/opt/scripts
         tty: true
         #command: bash -c '/bin/bash'
