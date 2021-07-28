@@ -20,9 +20,9 @@ echo "Configure::write('Security.cipherSeed', '999');" >> ./app/Config/core.php
 echo "Configure::write('NetCommons.installed', true);" >> ./app/Config/core.php
 
 
-echo "app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover build/logs/clover.xml --stderr"
+echo "sudo -s app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover build/logs/clover.xml --stderr"
 
-app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover build/logs/clover.xml --stderr
+sudo -s app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover build/logs/clover.xml --stderr
 
 ret=$?
 if [ $ret -eq 0 ]; then
