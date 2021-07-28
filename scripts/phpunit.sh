@@ -15,9 +15,8 @@ cd $NC3_BUILD_DIR
 cp /opt/scripts/database.php.act ./app/Config/database.php
 cp -pf /opt/plugin/phpunit.xml.dist .
 
-cat phpunit.xml.dist
-cat /etc/php/7.2/cli/php.ini
-
+#cat phpunit.xml.dist
+#cat /etc/php/7.2/cli/php.ini
 
 echo "Configure::write('Security.salt', 'ForTravis');" >> ./app/Config/core.php
 echo "Configure::write('Security.cipherSeed', '999');" >> ./app/Config/core.php
