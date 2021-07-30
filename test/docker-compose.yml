@@ -1,0 +1,36 @@
+version: '3'
+services:
+    # php-mysqlがあれば、phpイメージからアクセス可になる。
+    # phpイメージからmysqlコマンドをたたくなら、phpイメージにmysqlクライアント入れる必要
+    db_01:
+        #container_name: "db_01"
+        image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: ${MYSQL_DATABASE}
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        # ホストからアクセスの時に指定する。Docker間では、独自のネットワークを構築するため3306のポートで接続可能
+        #ports:
+        #  - "13306:3306"
+    nc3app:
+        #container_name: "nc3app"
+        image: netcommons3/nc3app-php${PHP_VERSION}:latest
+        #build:
+        #    context: .
+        #    args:
+        #      - PHP_VERSION=${PHP_VERSION}
+        environment:
+            NC3_BUILD_DIR: ${NC3_BUILD_DIR}
+            NC3_GIT_URL: ${NC3_GIT_URL}
+            NC3_GIT_BRANCH: ${NC3_GIT_BRANCH}
+            PLUGIN_BUILD_DIR: ${PLUGIN_BUILD_DIR}
+            PHP_VERSION: ${PHP_VERSION}
+            COMPOSE_INTERACTIVE_NO_CLI: 1
+            XDEBUG_MODE: coverage
+        depends_on:
+            - db_01
+        volumes:
+            - ${PLUGIN_BUILD_DIR}:/opt/plugin
+            - ${NC3_TEST_DIR}:${NC3_BUILD_DIR}
+            - ${NC3_DOCKER_DIR}/scripts:/opt/scripts
+        tty: true
+        #command: bash -c '/bin/bash'
