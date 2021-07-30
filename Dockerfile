@@ -82,11 +82,8 @@ RUN wget https://raw.githubusercontent.com/NetCommons3/chef_boilerplate_php/mast
 RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist && \
 cd /opt/nc3.dist && \
 rm composer.lock && \
-composer remove --no-update netcommons/install && \
 composer config minimum-stability dev && \
 composer config repositories.0 git https://github.com/NetCommons3/migrations.git && \
 composer config repositories.1 git https://github.com/NetCommons3/cakephp-upload.git && \
-composer require --no-update netcommons/net-commons && \
 composer install --no-scripts --no-ansi --no-interaction && \
-composer require --no-update netcommons/install && \
 git checkout composer.lock

@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
-#PHP_VERSIONS="7.0 7.1 7.2 7.3 7.4"
-PHP_VERSIONS="7.2"
+PHP_VERSIONS="7.1 7.2 7.3 7.4"
+#PHP_VERSIONS="7.2"
 TAG="latest"
 
 #docker ps -aq | xargs docker rm -f
