@@ -17,16 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: |
-          REP_VERSION=${{ github.ref }}
-          export TAG=${REP_VERSION#refs/tags/}
-          echo $TAG
-          ls -al
-
-      - run: |
-          echo $TAG
-          ls -al
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
