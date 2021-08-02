@@ -2,6 +2,16 @@
 
 GITHUB_WORKSPACE=`pwd`
 
+export TARGET_NC3_DIR="/var/www/html/nc3"
+export NC3_DOCKER_DIR="/var/www/html/nc3app-docker"
+
+if [ "${1}" = "" ]; then
+	echo "プラグインを指定してください。"
+	echo "e.g) bash ${0} Accouncements"
+	exit
+fi
+export PLUGIN_BUILD_DIR="${TARGET_NC3_DIR}/app/Plugin/${1}"
+
 export NC3_BUILD_DIR="/opt/nc3"
 export NC3_GIT_URL="git://github.com/NetCommons3/NetCommons3"
 export NC3_GIT_BRANCH="master"
@@ -9,8 +19,6 @@ export MYSQL_ROOT_PASSWORD=root
 export MYSQL_DATABASE=cakephp_test
 export PHP_VERSION=7.4
 export COMPOSE_INTERACTIVE_NO_CLI=1
-export PLUGIN_BUILD_DIR="/var/www/html/nc3/app/Plugin/Cabinets"
-export NC3_DOCKER_DIR="/var/www/html/nc3app-docker"
 export NC3_TEST_DIR="${NC3_DOCKER_DIR}/test/nc3"
 
 #------------------------------------------
@@ -25,6 +33,7 @@ else
 fi
 
 cd ${NC3_DOCKER_DIR}/test
+docker-compose stop
 docker-compose rm -a -f
 docker-compose up -d
 docker-compose start
@@ -40,6 +49,13 @@ docker-compose exec -T nc3app bash /opt/scripts/start-on-docker.sh
 
 if [ $APP_BUILD = "true" ]; then
 	docker-compose exec -T nc3app bash /opt/scripts/app-build.sh
+else
+	PLUGIN_NAME=`basename ${PLUGIN_BUILD_DIR}`
+	echo "PLUGIN_NAME=${PLUGIN_NAME}"
+	if [ -d "$NC3_BUILD_DIR/app/Plugin/$PLUGIN_NAME" ]; then
+	  rm -rf $NC3_BUILD_DIR/app/Plugin/$PLUGIN_NAME
+	fi
+	cp -rf $PLUGIN_BUILD_DIR $NC3_BUILD_DIR/app/Plugin/$PLUGIN_NAME
 fi
 
 #docker-compose exec -T nc3app bash /opt/scripts/phpcs.sh
