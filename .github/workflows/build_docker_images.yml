@@ -12,17 +12,20 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        php: [ '7.1' ]
+        php: [ '7.1', '7.2', '7.3', '7.4' ]
 
     steps:
-      - name: php version
-        run: |
+      - uses: actions/checkout@v2
+
+      - run: |
           REP_VERSION=${{ github.ref }}
-          TAG=${REP_VERSION#refs/tags/}
+          export TAG=${REP_VERSION#refs/tags/}
           echo $TAG
           ls -al
 
-      - uses: actions/checkout@v2
+      - run: |
+          echo $TAG
+          ls -al
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
