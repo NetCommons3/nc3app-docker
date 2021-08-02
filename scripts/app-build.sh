@@ -20,6 +20,8 @@ echo "PLUGIN_NAME=${PLUGIN_NAME}"
 
 cd $NC3_BUILD_DIR
 
+composer global require hirak/prestissimo
+
 # NetCommons3 project install
 rm composer.lock
 composer clear-cache
