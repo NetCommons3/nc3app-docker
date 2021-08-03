@@ -20,9 +20,10 @@ phpdoc parse -d app/Plugin/$PLUGIN_NAME -i app/Plugin/$PLUGIN_NAME/Vendor -t $TR
 
 #[ `grep -c '\[37;41m' $LOG` -ne 0 ] && cat $LOG && exit 1
 if [ `grep -c '\[37;41m' $LOG` -ne 0 ] && cat $LOG; then
-    export result=1
+    ret=1
     echo "Failure phpdoc."
 else
+    ret=0
     echo "Success phpdoc."
 fi
 echo ""
