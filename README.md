@@ -27,6 +27,46 @@ https://github.com/NetCommons3/nc3app-docker/actions/workflows/build_docker_imag
 
 ※dockerhub-build-push.shを実行しても可
 
+## テスト用のdocker-composeを直接実行する方法
+
+````
+cd nc3app-docker/test
+
+#----
+# 環境変数のロード
+#----
+export PLUGIN_NAME="Mails"
+source local.env
+
+#----
+# docker-compose 起動
+#----
+docker-compose up -d
+docker-compose start
+
+#----
+# docker-compose 起動確認
+#----
+docker-compose ps
+docker-compose exec -T nc3app bash /opt/scripts/start-on-docker.sh
+
+#----
+# dockerコンテナーの中に入る
+#----
+docker-compose exec nc3app bash
+
+#----
+# docker-compose 破棄
+#----
+docker-compose stop
+docker-compose rm -a -f
+
+#----
+# 環境変数の破棄
+#----
+source remove.env
+````
+
 
 ## ローカルの開発環境でテストを実行する
 
@@ -42,23 +82,21 @@ https://docs.docker.com/engine/install/
 https://docs.docker.jp/compose/install.html#compose
 
 
-### シェルのパスを各自修正する
+### local.envを各自修正する
 
-`test/docker-compose.sh` の下記のパスをローカルの環境に各自修正する
+`test/local.env` の下記のパスをローカルの環境に各自修正する
 
-https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8bb8a13dc71c/test/docker-compose.sh#L9-L14
+https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8bb8a13dc71c/test/local.env#L5-L6
 
 ````
- 9  if [ "${TARGET_NC3_DIR}" = "" ]; then
-10      export TARGET_NC3_DIR="/var/www/html/nc3"
-11  fi
-12  if [ "${NC3_DOCKER_DIR}" = "" ]; then
-13      export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
-14  fi
+ 5  export TARGET_NC3_DIR="/var/www/html/nc3"
+ 6  export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
+ 7
+ 8  export PHP_VERSION=7.4
 ````
 
 ※デフォルトphp7.4のイメージを使用しています。
-phpのバージョンを変える場合は、30行目のPHP_VERSIONを変更してください。
+phpのバージョンを変える場合は、PHP_VERSIONを変更してください。
 使用できるバージョンは、`7.1` , `7.2` , `7.3` , `7.4` です。
 
 
@@ -71,19 +109,8 @@ e.g) bash test/docker-compose.sh Announcements
 
 ## ローカルで全プラグインのテストを実行する
 
-事前準備として、dockerおよびdocker-composeはインストールしておいてください。
-
-
-### シェルのバスを修正する
-
-`test/PluginAllTest.sh` の下記のパスをローカルの環境に各自修正してください。
-
-https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8bb8a13dc71c/test/PluginAllTest.sh#L3-L4
-
-````
- 3  export TARGET_NC3_DIR="/var/www/html/nc3"
- 4  export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
-````
+事前準備として、dockerおよびdocker-composeはインストールしてください。
+また、local.envも各自設定を変更してください。
 
 ### テストシェルを実行する
 

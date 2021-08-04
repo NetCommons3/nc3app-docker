@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
-export TARGET_NC3_DIR="/var/www/html/nc3"
-export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+source ${SCRIPT_DIR}/local.env
 
 export RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/testResult.log
 echo "" > ${RESULT_LOGFILE}

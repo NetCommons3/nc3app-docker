@@ -6,13 +6,6 @@
 
 GITHUB_WORKSPACE=`pwd`
 
-if [ "${TARGET_NC3_DIR}" = "" ]; then
-	export TARGET_NC3_DIR="/var/www/html/nc3"
-fi
-if [ "${NC3_DOCKER_DIR}" = "" ]; then
-	export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
-fi
-
 if [ "${1}" = "" ]; then
 	echo "プラグインを指定してください。"
 	echo "e.g) bash ${0} Accouncements"
@@ -20,16 +13,9 @@ if [ "${1}" = "" ]; then
 fi
 
 export PLUGIN_NAME="${1}"
-export PLUGIN_BUILD_DIR="${TARGET_NC3_DIR}/app/Plugin/${PLUGIN_NAME}"
 
-export NC3_BUILD_DIR="/opt/nc3"
-export NC3_GIT_URL="git://github.com/NetCommons3/NetCommons3"
-export NC3_GIT_BRANCH="master"
-export MYSQL_ROOT_PASSWORD=root
-export MYSQL_DATABASE=cakephp_test
-export PHP_VERSION=7.4
-export COMPOSE_INTERACTIVE_NO_CLI=1
-export NC3_TEST_DIR="${NC3_DOCKER_DIR}/test/nc3"
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+source ${SCRIPT_DIR}/local.env
 
 if [ "$RESULT_LOGFILE" = "" ]; then
 	RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/testResult.log
