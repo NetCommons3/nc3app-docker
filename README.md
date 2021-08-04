@@ -1,57 +1,167 @@
-# netcommons3-docker
+# nc3テストのためのdocker
 
-このDockerは、Github Actionのテストで使用するためのDocker
+このDockerは、各プラグインのGithub Actionのテストで使用するためのDockerです。
 
-## Docker環境
+## Dockerイメージ
 
-| ライブラリ | バージョン | 備考
-| ------------ | ------ | ------
-| OS | Ubuntu 18.04 |
+Dockerhubに最新のイメージがあります。
+
+- php7.1
+https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.1
+
+- php7.2
+https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.2
+
+- php7.3
+https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.3
+
+- php7.4
+https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.4
 
 
-## 備考
+## 最新のDokerhubのイメージの作成方法
 
-### Docker Build
+当リポジトリのreleaseタグを付けることで最新のDokerイメージをDockerhubにPushします。
 
+https://github.com/NetCommons3/nc3app-docker/actions/workflows/build_docker_images.yml
+
+※dockerhub-build-push.shを実行しても可
+
+
+## ローカルの開発環境でテストを実行する
+
+### 事前準備
+
+#### 1. dockerのインストール
+
+https://docs.docker.com/engine/install/
+
+
+#### 2. docker-composeのインストール
+
+https://docs.docker.jp/compose/install.html#compose
+
+
+### シェルのパスを各自修正する
+
+`test/docker-compose.sh` の下記のパスをローカルの環境に各自修正する
+
+https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8bb8a13dc71c/test/docker-compose.sh#L9-L14
 
 ````
-e.g.)
-git clone https://github.com/NetCommons3/nc3app-docker.git
-cd nc3app-docker
-docker build --build-arg PHP_VERSION=7.2 -t nc3app-php7.2 .
+ 9  if [ "${TARGET_NC3_DIR}" = "" ]; then
+10      export TARGET_NC3_DIR="/var/www/html/nc3"
+11  fi
+12  if [ "${NC3_DOCKER_DIR}" = "" ]; then
+13      export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
+14  fi
 ````
 
-## Docker Run
+※デフォルトphp7.4のイメージを使用しています。
+phpのバージョンを変える場合は、30行目のPHP_VERSIONを変更してください。
+使用できるバージョンは、`7.1` , `7.2` , `7.3` , `7.4` です。
+
+
+### テストシェルを実行する
 
 ````
-e.g.)
-docker run -i -t -d --name=nc3app-php7.2 nc3app-php7.2
+bash test/docker-compose.sh (プラグイン名)
+e.g) bash test/docker-compose.sh Announcements
 ````
 
-## Dockerコンテナにアクセス
+## ローカルで全プラグインのテストを実行する
+
+事前準備として、dockerおよびdocker-composeはインストールしておいてください。
+
+
+### シェルのバスを修正する
+
+`test/PluginAllTest.sh` の下記のパスをローカルの環境に各自修正してください。
+
+https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8bb8a13dc71c/test/PluginAllTest.sh#L3-L4
 
 ````
-e.g.)
-docker exec -i -t nc3app-php7.2 /bin/bash
+ 3  export TARGET_NC3_DIR="/var/www/html/nc3"
+ 4  export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
 ````
 
-## Docker Delete
+### テストシェルを実行する
 
 ````
-docker rm -f nc3-docker
+bash test/PluginAllTest.sh
 ````
 
-## DockerHubにPush
-
-DockerHubにPushするにはアカウントとPusuできるパーミッションが必要です。
-※<tag>は、1.0のようなバージョンタグ
+### 別ターミナルで実行ログを監視
 
 ````
-e.g.)
-git clone https://github.com/NetCommons3/nc3app-docker.git
-cd nc3app-docker
-docker login
-docker build --no-cache --build-arg PHP_VERSION=7.2 -t netcommons3/nc3app-php7.2:<tag> .
-#docker tag netcommons3/nc3app-php7.2:<tag> netcommons3/nc3app-php7.2:<tag>
-docker push netcommons3/nc3app-php7.2:<tag>
+tail -f test/testResult.log
 ````
+````
+tail -f test/PluginAllTest.log
+````
+
+### NetCommons3リポジトリ―に上がっている全プラグインのテスト結果
+
+- [![Tests Status](https://github.com/NetCommons3/AccessCounters/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/AccessCounters/actions/workflows/tests.yml) : AccessCounters
+- [![Tests Status](https://github.com/NetCommons3/Announcements/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Announcements/actions/workflows/tests.yml) : Announcements
+- [![Tests Status](https://github.com/NetCommons3/Auth/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Auth/actions/workflows/tests.yml) : Auth
+- [![Tests Status](https://github.com/NetCommons3/AuthGeneral/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/AuthGeneral/actions/workflows/tests.yml) : AuthGeneral
+- [![Tests Status](https://github.com/NetCommons3/AuthorizationKeys/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/AuthorizationKeys/actions/workflows/tests.yml) : AuthorizationKeys
+- [![Tests Status](https://github.com/NetCommons3/Bbses/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Bbses/actions/workflows/tests.yml) : Bbses
+- [![Tests Status](https://github.com/NetCommons3/Blocks/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Blocks/actions/workflows/tests.yml) : Blocks
+- [![Tests Status](https://github.com/NetCommons3/Blogs/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Blogs/actions/workflows/tests.yml) : Blogs
+- [![Tests Status](https://github.com/NetCommons3/Boxes/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Boxes/actions/workflows/tests.yml) : Boxes
+- [![Tests Status](https://github.com/NetCommons3/Cabinets/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Cabinets/actions/workflows/tests.yml) : Cabinets
+- [![Tests Status](https://github.com/NetCommons3/Calendars/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Calendars/actions/workflows/tests.yml) : Calendars
+- [![Tests Status](https://github.com/NetCommons3/Categories/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Categories/actions/workflows/tests.yml) : Categories
+- [![Tests Status](https://github.com/NetCommons3/CircularNotices/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/CircularNotices/actions/workflows/tests.yml) : CircularNotices
+- [![Tests Status](https://github.com/NetCommons3/CleanUp/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/CleanUp/actions/workflows/tests.yml) : CleanUp
+- [![Tests Status](https://github.com/NetCommons3/CommunitySpace/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/CommunitySpace/actions/workflows/tests.yml) : CommunitySpace
+- [![Tests Status](https://github.com/NetCommons3/Containers/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Containers/actions/workflows/tests.yml) : Containers
+- [![Tests Status](https://github.com/NetCommons3/ContentComments/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/ContentComments/actions/workflows/tests.yml) : ContentComments
+- [![Tests Status](https://github.com/NetCommons3/ControlPanel/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/ControlPanel/actions/workflows/tests.yml) : ControlPanel
+- [![Tests Status](https://github.com/NetCommons3/DataTypes/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/DataTypes/actions/workflows/tests.yml) : DataTypes
+- [![Tests Status](https://github.com/NetCommons3/Faqs/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Faqs/actions/workflows/tests.yml) : Faqs
+- [![Tests Status](https://github.com/NetCommons3/Files/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Files/actions/workflows/tests.yml) : Files
+- [![Tests Status](https://github.com/NetCommons3/Frames/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Frames/actions/workflows/tests.yml) : Frames
+- [![Tests Status](https://github.com/NetCommons3/Groups/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Groups/actions/workflows/tests.yml) : Groups
+- [![Tests Status](https://github.com/NetCommons3/Holidays/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Holidays/actions/workflows/tests.yml) : Holidays
+- [![Tests Status](https://github.com/NetCommons3/Iframes/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Iframes/actions/workflows/tests.yml) : Iframes
+- [![Tests Status](https://github.com/NetCommons3/Install/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Install/actions/workflows/tests.yml) : Install
+- [![Tests Status](https://github.com/NetCommons3/Likes/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Likes/actions/workflows/tests.yml) : Likes
+- [![Tests Status](https://github.com/NetCommons3/Links/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Links/actions/workflows/tests.yml) : Links
+- [![Tests Status](https://github.com/NetCommons3/M17n/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/M17n/actions/workflows/tests.yml) : M17n
+- [![Tests Status](https://github.com/NetCommons3/Mails/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Mails/actions/workflows/tests.yml) : Mails
+- [![Tests Status](https://github.com/NetCommons3/Menus/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Menus/actions/workflows/tests.yml) : Menus
+- [![Tests Status](https://github.com/NetCommons3/Migrations/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Migrations/actions/workflows/tests.yml) : Migrations
+- [![Tests Status](https://github.com/NetCommons3/Multidatabases/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Multidatabases/actions/workflows/tests.yml) : Multidatabases
+- [![Tests Status](https://github.com/NetCommons3/Nc2ToNc3/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Nc2ToNc3/actions/workflows/tests.yml) : Nc2ToNc3
+- [![Tests Status](https://github.com/NetCommons3/NetCommons/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/NetCommons/actions/workflows/tests.yml) : NetCommons
+- [![Tests Status](https://github.com/NetCommons3/Notifications/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Notifications/actions/workflows/tests.yml) : Notifications
+- [![Tests Status](https://github.com/NetCommons3/Pages/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Pages/actions/workflows/tests.yml) : Pages
+- [![Tests Status](https://github.com/NetCommons3/PhotoAlbums/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/PhotoAlbums/actions/workflows/tests.yml) : PhotoAlbums
+- [![Tests Status](https://github.com/NetCommons3/PluginManager/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/PluginManager/actions/workflows/tests.yml) : PluginManager
+- [![Tests Status](https://github.com/NetCommons3/PrivateSpace/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/PrivateSpace/actions/workflows/tests.yml) : PrivateSpace
+- [![Tests Status](https://github.com/NetCommons3/PublicSpace/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/PublicSpace/actions/workflows/tests.yml) : PublicSpace
+- [![Tests Status](https://github.com/NetCommons3/Questionnaires/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Questionnaires/actions/workflows/tests.yml) : Questionnaires
+- [![Tests Status](https://github.com/NetCommons3/Quizzes/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Quizzes/actions/workflows/tests.yml) : Quizzes
+- [![Tests Status](https://github.com/NetCommons3/Registrations/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Registrations/actions/workflows/tests.yml) : Registrations
+- [![Tests Status](https://github.com/NetCommons3/Reservations/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Reservations/actions/workflows/tests.yml) : Reservations
+- [![Tests Status](https://github.com/NetCommons3/Roles/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Roles/actions/workflows/tests.yml) : Roles
+- [![Tests Status](https://github.com/NetCommons3/Rooms/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Rooms/actions/workflows/tests.yml) : Rooms
+- [![Tests Status](https://github.com/NetCommons3/RssReaders/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/RssReaders/actions/workflows/tests.yml) : RssReaders
+- [![Tests Status](https://github.com/NetCommons3/Searches/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Searches/actions/workflows/tests.yml) : Searches
+- [![Tests Status](https://github.com/NetCommons3/SiteManager/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/SiteManager/actions/workflows/tests.yml) : SiteManager
+- [![Tests Status](https://github.com/NetCommons3/SystemManager/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/SystemManager/actions/workflows/tests.yml) : SystemManager
+- [![Tests Status](https://github.com/NetCommons3/Tags/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Tags/actions/workflows/tests.yml) : Tags
+- [![Tests Status](https://github.com/NetCommons3/Tasks/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Tasks/actions/workflows/tests.yml) : Tasks
+- [![Tests Status](https://github.com/NetCommons3/ThemeSettings/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/ThemeSettings/actions/workflows/tests.yml) : ThemeSettings
+- [![Tests Status](https://github.com/NetCommons3/Topics/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Topics/actions/workflows/tests.yml) : Topics
+- [![Tests Status](https://github.com/NetCommons3/UserAttributes/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/UserAttributes/actions/workflows/tests.yml) : UserAttributes
+- [![Tests Status](https://github.com/NetCommons3/UserManager/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/UserManager/actions/workflows/tests.yml) : UserManager
+- [![Tests Status](https://github.com/NetCommons3/UserRoles/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/UserRoles/actions/workflows/tests.yml) : UserRoles
+- [![Tests Status](https://github.com/NetCommons3/Users/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Users/actions/workflows/tests.yml) : Users
+- [![Tests Status](https://github.com/NetCommons3/Videos/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Videos/actions/workflows/tests.yml) : Videos
+- [![Tests Status](https://github.com/NetCommons3/VisualCaptcha/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/VisualCaptcha/actions/workflows/tests.yml) : VisualCaptcha
+- [![Tests Status](https://github.com/NetCommons3/Workflow/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Workflow/actions/workflows/tests.yml) : Workflow
+- [![Tests Status](https://github.com/NetCommons3/Wysiwyg/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Wysiwyg/actions/workflows/tests.yml) : Wysiwyg
