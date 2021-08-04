@@ -71,6 +71,9 @@ RUN apt-get -y install wget
 RUN mkdir /opt/phpmd
 RUN wget https://raw.githubusercontent.com/NetCommons3/chef_boilerplate_php/master/files/default/build/cakephp/phpmd/rules.xml -O /opt/phpmd/rules.xml
 
+# sendmailのインストール
+RUN apt-get -y install sendmail sendmail-cf mailutils
+
 # Test Scriptのコピー
 #RUN mkdir /opt/scripts
 #COPY ./scripts/* /opt/scripts/
