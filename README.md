@@ -133,7 +133,6 @@ tail -f test/PluginAllTest.log
 - [![Tests Status](https://github.com/NetCommons3/M17n/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/M17n/actions/workflows/tests.yml) : M17n
 - [![Tests Status](https://github.com/NetCommons3/Mails/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Mails/actions/workflows/tests.yml) : Mails
 - [![Tests Status](https://github.com/NetCommons3/Menus/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Menus/actions/workflows/tests.yml) : Menus
-- [![Tests Status](https://github.com/NetCommons3/Migrations/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Migrations/actions/workflows/tests.yml) : Migrations
 - [![Tests Status](https://github.com/NetCommons3/Multidatabases/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Multidatabases/actions/workflows/tests.yml) : Multidatabases
 - [![Tests Status](https://github.com/NetCommons3/Nc2ToNc3/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/Nc2ToNc3/actions/workflows/tests.yml) : Nc2ToNc3
 - [![Tests Status](https://github.com/NetCommons3/NetCommons/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/NetCommons3/NetCommons/actions/workflows/tests.yml) : NetCommons
