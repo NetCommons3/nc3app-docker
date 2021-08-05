@@ -18,8 +18,14 @@ cd $NC3_BUILD_DIR
 # phpcpd
 for p in `cat ./app/Config/vendors.txt`
 do
-  export IGNORE_PLUGINS="$IGNORE_PLUGINS,$NC3_BUILD_DIR/app/Plugin/$p"
+  export IGNORE_PLUGINS_OPTS="$IGNORE_PLUGINS_OPTS --exclude app/Plugin/$p"
 done
+if [ -f app/Plugin/$PLUGIN_NAME/.phpcpdignore ]; then
+	for file in `cat app/Plugin/$PLUGIN_NAME/.phpcpdignore`
+	do
+	  export IGNORE_PLUGINS_OPTS="$IGNORE_PLUGINS_OPTS --exclude app/Plugin/$PLUGIN_NAME/$file"
+	done
+fi
 
 phpcpd --exclude Test --exclude Config --exclude Vendor $IGNORE_PLUGINS_OPTS app/Plugin/$PLUGIN_NAME
 
