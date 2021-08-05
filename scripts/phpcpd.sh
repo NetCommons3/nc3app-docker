@@ -18,13 +18,17 @@ cd $NC3_BUILD_DIR
 # phpcpd
 for p in `cat ./app/Config/vendors.txt`
 do
-  export IGNORE_PLUGINS_OPTS="$IGNORE_PLUGINS_OPTS --exclude app/Plugin/$p"
+	IGNORE_PLUGINS_OPTS="$IGNORE_PLUGINS_OPTS --exclude app/Plugin/$p"
 done
 if [ -f app/Plugin/$PLUGIN_NAME/.phpcpdignore ]; then
 	for file in `cat app/Plugin/$PLUGIN_NAME/.phpcpdignore`
 	do
-	  export IGNORE_PLUGINS_OPTS="$IGNORE_PLUGINS_OPTS --exclude app/Plugin/$PLUGIN_NAME/$file"
+		IGNORE_FILES="$IGNORE_FILES,$file"
 	done
+fi
+if [ ! "${IGNORE_FILES}" = "" ]; then
+	IGNORE_FILES=`echo $IGNORE_FILES | cut -c 2-`
+	IGNORE_PLUGINS_OPTS="$IGNORE_PLUGINS_OPTS --names-exclude ${IGNORE_FILES}"
 fi
 
 phpcpd --exclude Test --exclude Config --exclude Vendor $IGNORE_PLUGINS_OPTS app/Plugin/$PLUGIN_NAME
