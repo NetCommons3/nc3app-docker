@@ -18,7 +18,7 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 source ${SCRIPT_DIR}/local.env
 
 if [ "$RESULT_LOGFILE" = "" ]; then
-	RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/testResult.log
+	RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/logs/testResult.log
 	echo "" > ${RESULT_LOGFILE}
 	echo "//////////////////////////////////" >> ${RESULT_LOGFILE}
 	echo "// Test Results" >> ${RESULT_LOGFILE}
