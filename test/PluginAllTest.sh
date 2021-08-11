@@ -4,7 +4,7 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 source ${SCRIPT_DIR}/local.env
 
 TODAY=$(date +%y%m%d)
-export RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/testResult_${TODAY}.log
+export RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/logs/testResult_${TODAY}.log
 echo "" > ${RESULT_LOGFILE}
 echo "//////////////////////////////////" >> ${RESULT_LOGFILE}
 echo "// All Test Results" >> ${RESULT_LOGFILE}
@@ -12,7 +12,7 @@ echo "//////////////////////////////////" >> ${RESULT_LOGFILE}
 echo "" >> ${RESULT_LOGFILE}
 echo "+----------------------------+" >> ${RESULT_LOGFILE}
 
-export LOGFILE=${NC3_DOCKER_DIR}/test/PluginAllTest_${TODAY}.log
+export LOGFILE=${NC3_DOCKER_DIR}/test/logs/PluginAllTest_${TODAY}.log
 
 echo "" > ${LOGFILE}
 
