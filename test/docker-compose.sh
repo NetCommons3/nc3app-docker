@@ -65,6 +65,9 @@ if [ $APP_BUILD = "true" ]; then
 	docker-compose exec -T nc3app bash /opt/scripts/app-build.sh
 fi
 
+if [ -f "$NC3_TEST_DIR/app/Config/application.yml" ]; then
+  sudo -s rm -f $NC3_TEST_DIR/app/Config/application.yml
+fi
 if [ -d "$NC3_TEST_DIR/app/Plugin/$PLUGIN_NAME" ]; then
   sudo -s rm -Rf $NC3_TEST_DIR/app/Plugin/$PLUGIN_NAME
 fi
