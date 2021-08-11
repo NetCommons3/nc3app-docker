@@ -93,11 +93,15 @@ https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8b
  6  export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
  7
  8  export PHP_VERSION=7.4
+ 9  export MYSQL_VERSION=5.7
 ````
 
-※デフォルトphp7.4のイメージを使用しています。
+※phpのバージョンは、デフォルト7.4を使用しています。
 phpのバージョンを変える場合は、PHP_VERSIONを変更してください。
 使用できるバージョンは、`7.1` , `7.2` , `7.3` , `7.4` です。
+※MySQLのバージョンは、デフォルト5.7を使用しています。
+MySQLのバージョンを変える場合は、MYSQL_VERSIONを変更してください。
+使用できるバージョンは、https://hub.docker.com/_/mysql です。
 
 
 ### テストシェルを実行する
@@ -121,10 +125,10 @@ bash test/PluginAllTest.sh
 ### 別ターミナルで実行ログを監視
 
 ````
-tail -f test/testResult.log
+tail -f test/logs/testResult.log
 ````
 ````
-tail -f test/PluginAllTest.log
+tail -f test/logs/PluginAllTest.log
 ````
 
 ### NetCommons3リポジトリ―に上がっている全プラグインのテスト結果
