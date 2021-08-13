@@ -67,6 +67,11 @@ jobs:
           SLACK_COLOR: danger
           SLACK_MESSAGE: "Job Failure"
 
+  finish:
+    name: finish
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -80,11 +85,6 @@ jobs:
           prerelease: false
           continue-on-error: true
 
-  finish:
-    name: finish
-    runs-on: ubuntu-18.04
-    needs: build
-    steps:
       # JOB成功時はこちらのステップが実行される
       - name: Slack Notification on Success
         if: success()
