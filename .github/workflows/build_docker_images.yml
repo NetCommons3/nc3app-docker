@@ -81,9 +81,9 @@ jobs:
           continue-on-error: true
 
   finish:
-    name: build
+    name: finish
     runs-on: ubuntu-18.04
-    needs: tests
+    needs: build
     steps:
       # JOB成功時はこちらのステップが実行される
       - name: Slack Notification on Success
