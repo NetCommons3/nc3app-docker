@@ -21,8 +21,9 @@ jobs:
           SLACK_MESSAGE: "Start Job"
 
   build:
-    name: build_dockerhub_images
+    name: build
     runs-on: ubuntu-18.04
+    needs: start
     strategy:
       matrix:
         php: [ '7.1', '7.2', '7.3', '7.4' ]
@@ -79,7 +80,7 @@ jobs:
           SLACK_MESSAGE: "Job Failure"
 
   finish:
-    name: finish
+    name: build
     runs-on: ubuntu-18.04
     needs: tests
     steps:
