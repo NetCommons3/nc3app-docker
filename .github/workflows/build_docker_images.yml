@@ -56,6 +56,17 @@ jobs:
         run: |
           echo ${{ steps.docker_build.outputs.digest }}
 
+      # JOB失敗時はこちらのステップが実行される
+      - name: Slack Notification on Failure
+        uses: rtCamp/action-slack-notify@v2.2.0
+        if: failure()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_RELEASE }}
+          SLACK_CHANNEL: notify-nc3-release
+          SLACK_TITLE: "${{ github.repository }}"
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: "Job Failure"
+
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -67,17 +78,7 @@ jobs:
             Docker Image ${{ github.ref }} released.
           draft: false
           prerelease: false
-
-      # JOB失敗時はこちらのステップが実行される
-      - name: Slack Notification on Failure
-        uses: rtCamp/action-slack-notify@v2.2.0
-        if: failure()
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_RELEASE }}
-          SLACK_CHANNEL: notify-nc3-release
-          SLACK_TITLE: "${{ github.repository }}"
-          SLACK_COLOR: danger
-          SLACK_MESSAGE: "Job Failure"
+          continue-on-error: true
 
   finish:
     name: build
