@@ -67,6 +67,17 @@ jobs:
           SLACK_COLOR: danger
           SLACK_MESSAGE: "Job Failure"
 
+      # JOBキャンセル時はこちらのステップが実行される
+      - name: Slack Notification on Canceled
+        uses: rtCamp/action-slack-notify@v2.2.0
+        if: cancelled()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_RELEASE }}
+          SLACK_CHANNEL: notify-nc3-release
+          SLACK_TITLE: "${{ github.repository }}"
+          SLACK_COLOR: #eeeeee
+          SLACK_MESSAGE: "Job Canceled"
+
   finish:
     name: finish
     runs-on: ubuntu-18.04
@@ -84,17 +95,6 @@ jobs:
           draft: false
           prerelease: false
           continue-on-error: true
-
-      # JOBキャンセル時はこちらのステップが実行される
-      - name: Slack Notification on Canceled
-        uses: rtCamp/action-slack-notify@v2.2.0
-        if: cancelled()
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_RELEASE }}
-          SLACK_CHANNEL: notify-nc3-release
-          SLACK_TITLE: "${{ github.repository }}"
-          SLACK_COLOR: #eeeeee
-          SLACK_MESSAGE: "Job Canceled"
 
       # JOB成功時はこちらのステップが実行される
       - name: Slack Notification on Success
