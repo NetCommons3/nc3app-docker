@@ -85,16 +85,15 @@ jobs:
     steps:
       - name: Create Release
         uses: actions/create-release@v1
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          body: |
-            Docker Image ${{ github.ref }} released.
+          body: "Docker Image ${{ github.ref }} released."
           draft: false
           prerelease: false
-          continue-on-error: true
 
       # JOB成功時はこちらのステップが実行される
       - name: Slack Notification on Success
