@@ -36,7 +36,7 @@ cd nc3app-docker/test
 # docker起動
 #    第一引数にプラグインを指定してください。
 #----
-bash docker-start.sh NetCommons
+source local.env && bash docker-start.sh NetCommons
 
 #----
 # dockerコンテナーの中に入る
@@ -46,7 +46,7 @@ docker-compose exec nc3app bash
 #----
 # docker破棄
 #----
-bash docker-stop.sh
+bash docker-stop.sh && source remove.env
 ````
 
 
