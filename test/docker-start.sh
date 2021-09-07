@@ -6,17 +6,6 @@
 
 GITHUB_WORKSPACE=`pwd`
 
-if [ "${1}" = "" ]; then
-	echo "プラグインを指定してください。"
-	echo "e.g) bash ${0} Accouncements"
-	exit
-fi
-
-export PLUGIN_NAME="${1}"
-
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
-source ${SCRIPT_DIR}/local.env
-
 cd ${NC3_DOCKER_DIR}/test
 
 if [ ! -d ${NC3_TEST_DIR} ]; then
