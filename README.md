@@ -7,16 +7,16 @@
 Dockerhubに最新のイメージがあります。
 
 - php7.1
-https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.1
+https://hub.docker.com/r/netcommons3/nc3app-php7.1
 
 - php7.2
-https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.2
+https://hub.docker.com/r/netcommons3/nc3app-php7.1
 
 - php7.3
-https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.3
+https://hub.docker.com/r/netcommons3/nc3app-php7.1
 
 - php7.4
-https://hub.docker.com/repository/docker/netcommons3/nc3app-php7.4
+https://hub.docker.com/r/netcommons3/nc3app-php7.1
 
 
 ## 最新のDokerhubのイメージの作成方法
@@ -33,22 +33,10 @@ https://github.com/NetCommons3/nc3app-docker/actions/workflows/build_docker_imag
 cd nc3app-docker/test
 
 #----
-# 環境変数のロード
+# docker起動
+#    第一引数にプラグインを指定してください。
 #----
-export PLUGIN_NAME="Mails"
-source local.env
-
-#----
-# docker-compose 起動
-#----
-docker-compose up -d
-docker-compose start
-
-#----
-# docker-compose 起動確認
-#----
-docker-compose ps
-docker-compose exec -T nc3app bash /opt/scripts/start-on-docker.sh
+bash docker-start.sh NetCommons
 
 #----
 # dockerコンテナーの中に入る
@@ -56,15 +44,9 @@ docker-compose exec -T nc3app bash /opt/scripts/start-on-docker.sh
 docker-compose exec nc3app bash
 
 #----
-# docker-compose 破棄
+# docker破棄
 #----
-docker-compose stop
-docker-compose rm -a -f
-
-#----
-# 環境変数の破棄
-#----
-source remove.env
+bash docker-stop.sh
 ````
 
 
