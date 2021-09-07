@@ -36,7 +36,7 @@ cd nc3app-docker/test
 # docker起動
 #    第一引数にプラグインを指定してください。
 #----
-source local.env && bash docker-start.sh NetCommons
+export PLUGIN_NAME="NetCommons"; source local.env && bash docker-start.sh 
 
 #----
 # dockerコンテナーの中に入る
