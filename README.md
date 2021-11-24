@@ -77,7 +77,7 @@ git clone https://github.com/NetCommons3/nc3app-docker.git
 
 `test/local.env` の下記のパスをローカルの環境に各自修正する
 
-https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8bb8a13dc71c/test/local.env#L5-L6
+https://github.com/NetCommons3/nc3app-docker/blob/main/test/local.env#L5-L6
 
 ````
  5  export TARGET_NC3_DIR="/var/www/html/nc3"
