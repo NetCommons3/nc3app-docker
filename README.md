@@ -52,19 +52,28 @@ bash docker-stop.sh && source remove.env
 
 ## ローカルの開発環境でテストを実行する
 
-### 事前準備
+### 1. 事前準備
 
-#### 1. dockerのインストール
+#### 1-1. dockerのインストール
 
 https://docs.docker.com/engine/install/
 
 
-#### 2. docker-composeのインストール
+#### 1-2. docker-composeのインストール
 
 https://docs.docker.jp/compose/install.html#compose
 
 
-### local.envを各自修正する
+#### 1-3. 当リポジトリをgit cloneする。
+
+※`/var/www/html/nc3app-docker` に`git clone`する例
+
+````
+cd /var/www/html/
+git clone https://github.com/NetCommons3/nc3app-docker.git
+````
+
+### 2. local.envを各自修正する
 
 `test/local.env` の下記のパスをローカルの環境に各自修正する
 
@@ -72,13 +81,14 @@ https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8b
 
 ````
  5  export TARGET_NC3_DIR="/var/www/html/nc3"
- 6  export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
+ 6  export NC3_DOCKER_DIR="/var/www/html/nc3app-docker"
  7
- 8  export PHP_VERSION=7.4
+ 8  export PHP_VERSION=7.2
  9  export MYSQL_VERSION=5.7
 ````
 
-※phpのバージョンは、デフォルト7.4を使用しています。
+ - ※/var/www/html/nc3にNetCommons3を用意する必要はありません。
+ - ※phpのバージョンは、デフォルト7.2を使用しています。
 phpのバージョンを変える場合は、PHP_VERSIONを変更してください。
 使用できるバージョンは、`7.1` , `7.2` , `7.3` , `7.4` です。
 ※MySQLのバージョンは、デフォルト5.7を使用しています。
@@ -86,7 +96,7 @@ MySQLのバージョンを変える場合は、MYSQL_VERSIONを変更してく�
 使用できるバージョンは、https://hub.docker.com/_/mysql です。
 
 
-### テストシェルを実行する
+### 3. テストシェルを実行する
 
 ````
 bash test/docker-compose.sh (プラグイン名)
