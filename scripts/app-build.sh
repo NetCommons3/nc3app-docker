@@ -27,8 +27,9 @@ rm composer.lock
 composer clear-cache
 composer remove --no-update netcommons/install
 composer config minimum-stability dev
-composer config repositories.2 git https://github.com/NetCommons3/migrations.git
 composer config repositories.0 git https://github.com/NetCommons3/cakephp-upload.git
+composer config repositories.1 git https://github.com/NetCommons3/php-code-coverage.git
+composer config repositories.2 git https://github.com/NetCommons3/migrations.git
 
 # Plugin install
 php -q << _EOF_ > packages.txt
