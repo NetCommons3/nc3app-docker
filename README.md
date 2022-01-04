@@ -36,7 +36,7 @@ cd nc3app-docker/test
 # docker起動
 #    第一引数にプラグインを指定してください。
 #----
-export PLUGIN_NAME="NetCommons"; source local.env && bash docker-start.sh 
+export PLUGIN_NAME="NetCommons"; source local.env && bash docker-start.sh
 
 #----
 # dockerコンテナーの中に入る
@@ -71,14 +71,14 @@ https://docs.docker.jp/compose/install.html#compose
 https://github.com/NetCommons3/nc3app-docker/blob/7c29cf2b525dbd11fe0e7c2df35b8bb8a13dc71c/test/local.env#L5-L6
 
 ````
- 5  export TARGET_NC3_DIR="/var/www/html/nc3"
- 6  export NC3_DOCKER_DIR="/var/www/html/nc3app-docker2"
+ 5  export TARGET_NC3_DIR="/var/www/NetCommons3/app"
+ 6  export NC3_DOCKER_DIR="/var/www/NetCommons3/nc3app-docker"
  7
- 8  export PHP_VERSION=7.4
+ 8  export PHP_VERSION=7.3
  9  export MYSQL_VERSION=5.7
 ````
 
-※phpのバージョンは、デフォルト7.4を使用しています。
+※phpのバージョンは、デフォルト7.3を使用しています。
 phpのバージョンを変える場合は、PHP_VERSIONを変更してください。
 使用できるバージョンは、`7.1` , `7.2` , `7.3` , `7.4` です。
 ※MySQLのバージョンは、デフォルト5.7を使用しています。
