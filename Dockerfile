@@ -39,7 +39,7 @@ RUN echo ${PHP_VERSION}
 
 RUN apt-get -y install software-properties-common
 RUN add-apt-repository -y ppa:ondrej/php
-#RUN apt-get update
+RUN apt-get update
 
 RUN apt-get -y install php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-dev php${PHP_VERSION}-curl \
 php${PHP_VERSION}-mbstring php${PHP_VERSION}-gd php-pear php${PHP_VERSION}-mysql \
