@@ -5,3 +5,5 @@
 /.projectKnowledge
 /nbproject
 .log
+test/logs
+test/nc3*

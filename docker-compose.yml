@@ -13,7 +13,7 @@ services:
         #ports:
         #  - "13306:3306"
     nc3app:
-        container_name: "nc3app"
+        #container_name: "nc3app"
         image: netcommons3/nc3app-php${PHP_VERSION}:latest
         #build:
         #    context: .

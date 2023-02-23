@@ -27,6 +27,7 @@ services:
             PHP_VERSION: ${PHP_VERSION}
             COMPOSE_INTERACTIVE_NO_CLI: 1
             XDEBUG_MODE: coverage
+            NC3_LOCAL_TEST: ${NC3_LOCAL_TEST}
         depends_on:
             - db_01
         volumes:

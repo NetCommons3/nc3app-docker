@@ -20,58 +20,58 @@ echo "PLUGIN_NAME=${PLUGIN_NAME}"
 
 cd $NC3_BUILD_DIR
 
-composer global require hirak/prestissimo
+#composer global require hirak/prestissimo
 
 # NetCommons3 project install
-rm composer.lock
-composer clear-cache
-composer remove --no-update netcommons/install
+#rm composer.lock
+#composer clear-cache
 composer config minimum-stability dev
-composer config repositories.0 git https://github.com/NetCommons3/cakephp-upload.git
-composer config repositories.1 git https://github.com/NetCommons3/php-code-coverage.git
-composer config repositories.2 git https://github.com/NetCommons3/migrations.git
+#composer config repositories.cakephp-upload git https://github.com/NetCommons3/cakephp-upload.git
+#composer config repositories.php-code-coverage git https://github.com/NetCommons3/php-code-coverage.git
+#composer config repositories.migrations git https://github.com/NetCommons3/migrations.git
+composer require --no-update netcommons/install:@dev
 
-# Plugin install
-php -q << _EOF_ > packages.txt
-<?php
-\$composer = json_decode(file_get_contents('/opt/plugin/composer.json'), true);
-\$ret = '';
-if (isset(\$composer['require'])) {
-  foreach (\$composer['require'] as \$package => \$version) {
-    if (\$NC3_GIT_BRANCH === 'availability' && \$package === 'netcommons/net-commons') {
-      \$version = 'dev-availability';
-    }
-    \$ret .= ' ' . \$package . ':' . \$version;
-  }
-}
-echo \$ret;
-_EOF_
+## Plugin install
+#php -q << _EOF_ > packages.txt
+#<?php
+#\$composer = json_decode(file_get_contents('/opt/plugin/composer.json'), true);
+#\$ret = '';
+#if (isset(\$composer['require'])) {
+#  foreach (\$composer['require'] as \$package => \$version) {
+#    if ('$NC3_GIT_BRANCH' === 'availability' && \$package === 'netcommons/net-commons') {
+#      \$version = 'dev-availability';
+#    }
+#    \$ret .= ' ' . \$package . ':' . \$version;
+#  }
+#}
+#echo \$ret;
+#_EOF_
+#
+#composerRequire=`cat packages.txt | cut -c 2-`
+#if [ ! "$composerRequire" = "" ] ; then
+#  echo $composerRequire
+#  composer require --no-update $composerRequire
+#fi
+#
+#php -q << _EOF_ > packages.txt
+#<?php
+#\$composer = json_decode(file_get_contents('/opt/plugin/composer.json'), true);
+#\$ret = '';
+#if (isset(\$composer['require-dev'])) {
+#  foreach (\$composer['require-dev'] as \$package => \$version) {
+#    \$ret .= ' ' . \$package . ':' . \$version;
+#  }
+#}
+#echo \$ret;
+#_EOF_
+#
+#composerRequireDev=`cat packages.txt | cut -c 2-`
+#if [ ! "$composerRequireDev" = "" ] ; then
+#  echo $composerRequireDev
+#  composer require --dev --no-update $composerRequireDev
+#fi
 
-composerRequire=`cat packages.txt | cut -c 2-`
-if [ ! "$composerRequire" = "" ] ; then
-  echo $composerRequire
-  composer require --no-update $composerRequire
-fi
-
-php -q << _EOF_ > packages.txt
-<?php
-\$composer = json_decode(file_get_contents('/opt/plugin/composer.json'), true);
-\$ret = '';
-if (isset(\$composer['require-dev'])) {
-  foreach (\$composer['require-dev'] as \$package => \$version) {
-    \$ret .= ' ' . \$package . ':' . \$version;
-  }
-}
-echo \$ret;
-_EOF_
-
-composerRequireDev=`cat packages.txt | cut -c 2-`
-if [ ! "$composerRequireDev" = "" ] ; then
-  echo $composerRequireDev
-  composer require --dev --no-update $composerRequireDev
-fi
-
-composer install --no-scripts --no-ansi --no-interaction
+composer update --no-scripts --no-ansi --no-interaction
 
 #-----------------------
 # Setup Plugin

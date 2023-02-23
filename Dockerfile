@@ -86,7 +86,9 @@ RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist &
 cd /opt/nc3.dist && \
 rm composer.lock && \
 composer config minimum-stability dev && \
-composer config repositories.0 git https://github.com/NetCommons3/migrations.git && \
-composer config repositories.1 git https://github.com/NetCommons3/cakephp-upload.git && \
+composer require --no-update netcommons/install:@dev && \
+composer config repositories.0 git https://github.com/NetCommons3/cakephp-upload.git && \
+composer config repositories.1 git https://github.com/NetCommons3/php-code-coverage.git && \
+composer config repositories.2 git https://github.com/NetCommons3/migrations.git && \
 composer install --no-scripts --no-ansi --no-interaction && \
 git checkout composer.lock

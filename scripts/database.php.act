@@ -20,6 +20,7 @@ class DATABASE_CONFIG {
 		'password' => 'root',
 		'database' => 'cakephp_test',
 		'prefix' => '',
+		'encoding' => 'utf8',
 		'settings' => [
 			'@@SESSION.sql_mode' => "''",
 		],
@@ -34,6 +35,7 @@ class DATABASE_CONFIG {
 		'password' => 'root',
 		'database' => 'cakephp_test',
 		'prefix' => '',
+		'encoding' => 'utf8',
 		'settings' => [
 			'@@SESSION.sql_mode' => "''",
 		],
@@ -48,6 +50,7 @@ class DATABASE_CONFIG {
 		'password' => 'root',
 		'database' => 'cakephp_test',
 		'prefix' => '',
+		'encoding' => 'utf8',
 		'settings' => [
 			'@@SESSION.sql_mode' => "''",
 		],

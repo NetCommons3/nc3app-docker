@@ -11,6 +11,11 @@ echo "------------------------------------------------------"
 
 cd $NC3_BUILD_DIR
 
+CMDPARAM=$1
+if [ "$CMDPARAM" = "" ]; then
+	CMDPARAMS="All$PLUGIN_NAME"
+fi
+
 # php
 cp /opt/scripts/database.php.act ./app/Config/database.php
 cp -pf /opt/plugin/phpunit.xml.dist .
@@ -22,7 +27,7 @@ echo "Configure::write('Security.salt', 'ForTravis');" >> ./app/Config/core.php
 echo "Configure::write('Security.cipherSeed', '999');" >> ./app/Config/core.php
 echo "Configure::write('NetCommons.installed', true);" >> ./app/Config/core.php
 
-app/Console/cake test $PLUGIN_NAME All$PLUGIN_NAME --coverage-clover --stderr
+app/Console/cake test $PLUGIN_NAME $CMDPARAMS --coverage-clover --stderr
 
 ret=$?
 if [ $ret -eq 0 ]; then
