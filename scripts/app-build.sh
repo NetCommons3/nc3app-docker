@@ -26,9 +26,9 @@ cd $NC3_BUILD_DIR
 #rm composer.lock
 #composer clear-cache
 composer config minimum-stability dev
-#composer config repositories.cakephp-upload git https://github.com/NetCommons3/cakephp-upload.git
-#composer config repositories.php-code-coverage git https://github.com/NetCommons3/php-code-coverage.git
-#composer config repositories.migrations git https://github.com/NetCommons3/migrations.git
+composer config repositories.cakephp-upload git https://github.com/NetCommons3/cakephp-upload.git
+composer config repositories.php-code-coverage git https://github.com/NetCommons3/php-code-coverage.git
+composer config repositories.migrations git https://github.com/NetCommons3/migrations.git
 composer require --no-update netcommons/install:@dev
 
 ## Plugin install
