@@ -42,7 +42,7 @@ php -q << _EOF_ > packages.txt
 \$ret = '';
 if (isset(\$composer['require'])) {
   foreach (\$composer['require'] as \$package => \$version) {
-    if (\$NC3_GIT_BRANCH === 'availability' && \$package === 'netcommons/net-commons') {
+    if ('$NC3_GIT_BRANCH' === 'availability' && \$package === 'netcommons/net-commons') {
       \$version = 'dev-availability';
     }
     \$ret .= ' ' . \$package . ':' . \$version;
