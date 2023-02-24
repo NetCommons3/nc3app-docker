@@ -26,6 +26,7 @@ services:
             PLUGIN_BUILD_DIR: ${PLUGIN_BUILD_DIR}
             PHP_VERSION: ${PHP_VERSION}
             COMPOSE_INTERACTIVE_NO_CLI: 1
+            COMPOSE_HTTP_TIMEOUT: 120
             XDEBUG_MODE: coverage
             NC3_LOCAL_TEST: ${NC3_LOCAL_TEST}
             COMPOSER_TOKEN: ${COMPOSER_TOKEN}
