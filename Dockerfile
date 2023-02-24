@@ -89,10 +89,9 @@ RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 #RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV COMPOSER_AUTH=${COMPOSER_AUTH}
 
-#RUN cd /opt/nc3.dist && \
-#composer config -g github-oauth.github.com ${COMPOSER_TOKEN}
+RUN cd /opt/nc3.dist && \
+composer config -g github-oauth.github.com ${COMPOSER_TOKEN}
 
 RUN cd /opt/nc3.dist && \
 composer config minimum-stability dev && \
