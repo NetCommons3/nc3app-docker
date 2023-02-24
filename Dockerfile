@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
 
 #RUN echo $HOME
+RUN echo -e "[url \"https://github.com/\"]\n  insteadOf = \"git://github.com/\"" >> ~/.gitconfig
 
 # パッケージ準備 (linux)
 RUN apt-get update
