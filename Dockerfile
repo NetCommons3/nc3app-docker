@@ -1,9 +1,6 @@
 FROM ubuntu:18.04
 
 #RUN echo $HOME
-RUN echo "[url \"https://github.com/\"]" >> ~/.gitconfig
-RUN echo "  insteadOf = \"git://github.com/\"" >> ~/.gitconfig
-RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 
 # パッケージ準備 (linux)
 RUN apt-get update
@@ -22,6 +19,10 @@ RUN which zip
 RUN apt-get -y install git
 RUN git --version
 RUN which git
+
+RUN echo '[url "https://github.com/"]' >> ~/.gitconfig
+RUN echo '  insteadOf = "git://github.com/"' >> ~/.gitconfig
+RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 
 # ffmpegのインストール
 RUN apt-get -y install ffmpeg
