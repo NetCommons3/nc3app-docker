@@ -88,6 +88,7 @@ RUN echo '  insteadOf = "git://github.com/"' >> ~/.gitconfig
 RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 #RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN cd /opt/nc3.dist && \
 composer config github-oauth.github.com ${COMPOSER_TOKEN}
 

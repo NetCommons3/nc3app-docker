@@ -13,6 +13,7 @@ echo "PLUGIN_BUILD_DIR=${PLUGIN_BUILD_DIR}"
 #-----------------------
 # Exec composer install
 #-----------------------
+export COMPOSER_ALLOW_SUPERUSER=1
 
 if [ ! "${COMPOSER_TOKEN}" = "" ]; then
   composer config github-oauth.github.com ${COMPOSER_TOKEN}
