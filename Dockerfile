@@ -82,9 +82,10 @@ RUN apt-get -y install sendmail sendmail-cf mailutils
 #COPY ./scripts/test/* /opt/scripts/test/
 
 # NetCommons3 setup
-#RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
-RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
+RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
+#RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 RUN cd /opt/nc3.dist && \
+composer config github-oauth.github.com ${COMPOSER_TOKEN} && \
 composer config minimum-stability dev && \
 composer config repositories.0 git https://github.com/NetCommons3/cakephp-upload.git && \
 composer config repositories.1 git https://github.com/NetCommons3/php-code-coverage.git && \
