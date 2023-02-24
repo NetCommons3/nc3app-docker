@@ -28,6 +28,9 @@ jobs:
       matrix:
         php: [ '7.1', '7.2', '7.3', '7.4' ]
 
+    env:
+      COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.COMPOSER_AUTH }}"} }'
+
     steps:
       - uses: actions/checkout@v2
 
@@ -48,7 +51,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           build-args: |
-            COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            COMPOSER_TOKEN: ${{ COMPOSER_AUTH }}
             PHP_VERSION=${{ matrix.php }}
           push: true
           tags: "netcommons3/nc3app-php${{ matrix.php }}:latest"
