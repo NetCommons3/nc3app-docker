@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-RUN echo $HOME
+#RUN echo $HOME
 
 # パッケージ準備 (linux)
 RUN apt-get update
@@ -39,7 +39,7 @@ RUN echo ${PHP_VERSION}
 
 RUN apt-get -y install software-properties-common
 RUN add-apt-repository -y ppa:ondrej/php
-RUN apt-get update
+#RUN apt-get update
 
 RUN apt-get -y install php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-dev php${PHP_VERSION}-curl \
 php${PHP_VERSION}-mbstring php${PHP_VERSION}-gd php-pear php${PHP_VERSION}-mysql \
@@ -82,13 +82,14 @@ RUN apt-get -y install sendmail sendmail-cf mailutils
 #COPY ./scripts/test/* /opt/scripts/test/
 
 # NetCommons3 setup
-RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist && \
-cd /opt/nc3.dist && \
-rm composer.lock && \
+#RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
+RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
+RUN cd /opt/nc3.dist && \
 composer config minimum-stability dev && \
-composer require --no-update netcommons/install:@dev && \
 composer config repositories.0 git https://github.com/NetCommons3/cakephp-upload.git && \
 composer config repositories.1 git https://github.com/NetCommons3/php-code-coverage.git && \
-composer config repositories.2 git https://github.com/NetCommons3/migrations.git && \
+composer config repositories.2 git https://github.com/NetCommons3/migrations.git
+RUN cd /opt/nc3.dist && \
+rm composer.lock && \
 composer install --no-scripts --no-ansi --no-interaction && \
 git checkout composer.lock

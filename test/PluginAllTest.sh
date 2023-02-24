@@ -31,6 +31,7 @@ do
 		"MobileDetect" ) continue ;;
 		"Sandbox" ) continue ;;
 		#"Install" ) continue ;;
+		"Nc2ToNc3" ) continue ;;
 		"TinyMCE" ) continue ;;
 		"Upload" ) continue ;;
 		* )

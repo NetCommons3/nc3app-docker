@@ -129,3 +129,7 @@ echo "+----------------------------+" >> ${RESULT_LOGFILE}
 
 docker-compose stop
 docker-compose rm -a -f
+
+# 下記のエラーが出るようになったため
+# UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=60)
+sudo -s systemctl restart docker

@@ -28,6 +28,7 @@ services:
             COMPOSE_INTERACTIVE_NO_CLI: 1
             XDEBUG_MODE: coverage
             NC3_LOCAL_TEST: ${NC3_LOCAL_TEST}
+            COMPOSER_TOKEN: ${COMPOSER_TOKEN}
         depends_on:
             - db_01
         volumes:
