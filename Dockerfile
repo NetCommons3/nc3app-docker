@@ -1,7 +1,9 @@
 FROM ubuntu:18.04
 
 #RUN echo $HOME
-RUN echo -e "[url \"https://github.com/\"]\n  insteadOf = \"git://github.com/\"" >> ~/.gitconfig
+RUN echo "[url \"https://github.com/\"]" >> ~/.gitconfig
+RUN echo "  insteadOf = \"git://github.com/\"" >> ~/.gitconfig
+RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 
 # パッケージ準備 (linux)
 RUN apt-get update
@@ -83,7 +85,7 @@ RUN apt-get -y install sendmail sendmail-cf mailutils
 #COPY ./scripts/test/* /opt/scripts/test/
 
 # NetCommons3 setup
-RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
+#RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 #RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 RUN cd /opt/nc3.dist && \
 composer config github-oauth.github.com ${COMPOSER_TOKEN} && \
