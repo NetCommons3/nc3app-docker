@@ -48,7 +48,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           build-args: |
-            COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            COMPOSER_TOKEN: ${{ secrets.COMPOSER_TOKEN }}
             PHP_VERSION=${{ matrix.php }}
           push: true
           tags: "netcommons3/nc3app-php${{ matrix.php }}:latest"
