@@ -2,6 +2,9 @@ FROM ubuntu:18.04
 
 #RUN echo $HOME
 
+ARG COMPOSER_TOKEN
+RUN echo ${COMPOSER_TOKEN}
+
 # パッケージ準備 (linux)
 RUN apt-get update
 RUN apt-get install -y curl
@@ -88,10 +91,9 @@ RUN echo '  insteadOf = "git://github.com/"' >> ~/.gitconfig
 RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 #RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
+ARG COMPOSER_TOKEN
 RUN cd /opt/nc3.dist && \
-composer config -g github-oauth.github.com ${COMPOSER_TOKEN}
+COMPOSER_ALLOW_SUPERUSER=1 composer config --global -a github-oauth.github.com ${COMPOSER_TOKEN}
 
 RUN cd /opt/nc3.dist && \
 composer config minimum-stability dev && \

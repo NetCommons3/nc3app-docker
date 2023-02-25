@@ -3,7 +3,7 @@
 PHP_VERSIONS="7.1 7.2 7.3 7.4"
 #PHP_VERSIONS="7.2"
 TAG="latest"
-COMPOSER_TOKEN=(GitHub Access Token)
+#COMPOSER_TOKEN="(Github Token)"
 
 #docker ps -aq | xargs docker rm -f
 #docker images -aq | xargs docker rmi -f
