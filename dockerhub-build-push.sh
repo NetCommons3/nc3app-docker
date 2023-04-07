@@ -19,5 +19,10 @@ do
 
 	docker push netcommons3/nc3app-php${phpVersion}:${TAG}
 	docker rmi netcommons3/nc3app-php${phpVersion}
+
+	yes | docker system prune --volumes
+	yes | docker builder prune
 done
-docker builder prune
+
+yes | docker system prune --volumes
+yes | docker builder prune
