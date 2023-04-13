@@ -3,8 +3,11 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 source ${SCRIPT_DIR}/local.env
 
-TODAYH=$(date +%y%m%d%H%M)
-export RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/logs/testResult_${TODAYH}.log
+if [ "$RESULT_LOGFILE" = "" ]; then
+	TODAYH=$(date +%y%m%d%H%M)
+	export RESULT_LOGFILE=${NC3_DOCKER_DIR}/test/logs/testResult_${TODAYH}.log
+fi
+
 echo "" > ${RESULT_LOGFILE}
 echo "//////////////////////////////////" >> ${RESULT_LOGFILE}
 echo "// All Test Results" >> ${RESULT_LOGFILE}
