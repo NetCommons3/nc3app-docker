@@ -3,7 +3,8 @@
 
 /.project
 /.projectKnowledge
-/nbproject
+nbproject/
 .log
 test/logs
 test/nc3*
+.idea/

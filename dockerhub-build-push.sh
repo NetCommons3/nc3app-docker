@@ -8,7 +8,11 @@ TAG="latest"
 #docker ps -aq | xargs docker rm -f
 #docker images -aq | xargs docker rmi -f
 
-docker login
+if [ ! "${DOCKER_USER}" = "" -a ! "${DOCKER_PASS}" = "" ]; then
+  docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+else
+  docker login
+fi
 
 for phpVersion in ${PHP_VERSIONS}
 do
