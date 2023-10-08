@@ -3,6 +3,11 @@
 PHP_VERSIONS="7.1 7.2 7.3 7.4"
 #PHP_VERSIONS="7.2"
 TAG="latest"
+
+if [ "${MODE}" = "" ]; then
+	MODE="$1"; export MODE
+fi
+
 #COMPOSER_TOKEN="(Github Token)"
 
 #docker ps -aq | xargs docker rm -f
@@ -21,7 +26,9 @@ do
 --build-arg PHP_VERSION=${phpVersion} \
 -t netcommons3/nc3app-php${phpVersion}:${TAG} .
 
-	docker push netcommons3/nc3app-php${phpVersion}:${TAG}
+  if [ "${MODE}" = "prod" ]; then
+    docker push netcommons3/nc3app-php${phpVersion}:${TAG}
+  fi
 	docker rmi netcommons3/nc3app-php${phpVersion}
 
 	yes | docker system prune --volumes
