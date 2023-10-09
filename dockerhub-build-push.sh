@@ -5,7 +5,8 @@ PHP_VERSIONS="7.1 7.2 7.3 7.4"
 TAG="latest"
 
 if [ "${MODE}" = "" ]; then
-	MODE="$1"; export MODE
+	#MODE="prod"
+	MODE="$1"
 fi
 
 #COMPOSER_TOKEN="(Github Token)"
