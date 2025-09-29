@@ -56,7 +56,7 @@ RUN php -v
 # composerのインストール
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
-RUN composer self-update --1
+RUN composer self-update --2
 
 ## mysqlのインストール
 #RUN apt-get -y install mysql-server-5.7 mysql-client-5.7
@@ -98,6 +98,7 @@ COMPOSER_ALLOW_SUPERUSER=1 composer config --global -a github-oauth.github.com $
 
 RUN cd /opt/nc3.dist && \
 composer config minimum-stability dev && \
+composer config preferred-install.netcommons/* source && \
 composer config repositories.0 git https://github.com/NetCommons3/cakephp-upload.git && \
 composer config repositories.1 git https://github.com/NetCommons3/php-code-coverage.git && \
 composer config repositories.2 git https://github.com/NetCommons3/migrations.git
