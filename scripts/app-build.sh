@@ -5,6 +5,8 @@
 #-----------------------
 
 cd $NC3_BUILD_DIR
+git config --global --add safe.directory $NC3_BUILD_DIR
+
 cp -rpf /opt/nc3.dist/app ./
 cp -rpf /opt/nc3.dist/vendors ./
 
