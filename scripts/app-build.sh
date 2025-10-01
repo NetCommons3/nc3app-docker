@@ -25,8 +25,6 @@ echo "PLUGIN_NAME=${PLUGIN_NAME}"
 
 cd $NC3_BUILD_DIR
 
-composer global require hirak/prestissimo
-
 # NetCommons3 project install
 rm composer.lock
 composer clear-cache
@@ -37,6 +35,7 @@ else
 fi
 
 composer config minimum-stability dev
+composer config preferred-install.netcommons/* source
 composer config repositories.cakephp-upload git https://github.com/NetCommons3/cakephp-upload.git
 composer config repositories.php-code-coverage git https://github.com/NetCommons3/php-code-coverage.git
 composer config repositories.migrations git https://github.com/NetCommons3/migrations.git
@@ -82,6 +81,7 @@ if [ ! "$composerRequireDev" = "" ] ; then
 fi
 
 composer install --no-scripts --no-ansi --no-interaction
+composer config --global --unset github-oauth.github.com
 
 #-----------------------
 # Setup Plugin

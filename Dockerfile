@@ -1,36 +1,58 @@
-#FROM ubuntu:18.04
-FROM ubuntu:20.04
-
-#RUN echo $HOME
-
-ARG COMPOSER_TOKEN
-RUN echo ${COMPOSER_TOKEN}
+# syntax=docker/dockerfile:1.4
+FROM ubuntu:24.04
 
 # パッケージ準備 (linux)
-RUN apt-get update
-RUN apt-get install -y curl
-#RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends curl
 
 # タイムゾーンのセット
-RUN apt-get install -y tzdata
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends tzdata
+
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 # ZIPのインストール
-RUN apt-get -y install zip unzip
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends zip unzip
+
 RUN which zip
 
 # gitのインストール
-RUN apt-get -y install git
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends git
+
 RUN git --version
 RUN which git
 
 # ffmpegのインストール
-RUN apt-get -y install ffmpeg
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends ffmpeg
+
 RUN ffmpeg -version
 RUN which ffmpeg
 
 # bowerのインストール
-RUN apt-get -y install nodejs npm
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends nodejs npm
+
 RUN node -v
 RUN npm -v
 RUN npm install bower -g
@@ -41,11 +63,19 @@ RUN which bower
 ARG PHP_VERSION
 RUN echo ${PHP_VERSION}
 
-RUN apt-get -y install software-properties-common
-RUN add-apt-repository -y ppa:ondrej/php
-#RUN apt-get update
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends ca-certificates gnupg2 software-properties-common
 
-RUN apt-get -y install php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-dev php${PHP_VERSION}-curl \
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+add-apt-repository -y ppa:ondrej/php; \
+apt-get update; \
+apt-get install -y --no-install-recommends \
+php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-dev php${PHP_VERSION}-curl \
 php${PHP_VERSION}-mbstring php${PHP_VERSION}-gd php-pear php${PHP_VERSION}-mysql \
 php${PHP_VERSION}-xdebug php${PHP_VERSION}-intl php${PHP_VERSION}-zip php${PHP_VERSION}-xmlrpc \
 php${PHP_VERSION}-xml php${PHP_VERSION}-imagick php${PHP_VERSION}-cli
@@ -63,20 +93,60 @@ RUN composer self-update --2
 #RUN mysql --version
 
 # gjslintのインストール
+ARG PY2_VERSION=2.7.18
+ARG PY2_PREFIX=/usr/local/python2
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends \
+build-essential ca-certificates wget xz-utils \
+libssl-dev zlib1g-dev libncurses5-dev libffi-dev libsqlite3-dev \
+libbz2-dev libreadline-dev tk-dev uuid-dev
+
+RUN rm -rf /var/lib/apt/lists/*
+
+RUN cd /tmp; \
+wget -O Python-${PY2_VERSION}.tgz https://www.python.org/ftp/python/${PY2_VERSION}/Python-${PY2_VERSION}.tgz; \
+tar xzf Python-${PY2_VERSION}.tgz
+
+RUN cd /tmp/Python-${PY2_VERSION}; \
+./configure --prefix=${PY2_PREFIX} --enable-optimizations; \
+make -j"$(nproc)"; \
+make altinstall
+
+RUN ln -sf ${PY2_PREFIX}/bin/python2.7 /usr/local/bin/python2
+RUN python2 -V
+RUN cd /; rm -rf /tmp/Python-${PY2_VERSION} /tmp/Python-${PY2_VERSION}.tgz
+
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
-RUN python2 get-pip.py
+
+ENV PATH="/usr/local/python2/bin:${PATH}"
+
+RUN python2 get-pip.py "pip==20.3.4"
 RUN pip --version
 RUN pip install six
 RUN pip install https://github.com/NetCommons3/NetCommons3/raw/master/tools/build/plugins/cakephp/travis/v2.3.19.tar.gz
 RUN which gjslint
 
 # phpmdのセットアップ
-RUN apt-get -y install wget
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends wget
+
 RUN mkdir /opt/phpmd
 RUN wget https://raw.githubusercontent.com/NetCommons3/chef_boilerplate_php/master/files/default/build/cakephp/phpmd/rules.xml -O /opt/phpmd/rules.xml
 
 # sendmailのインストール
-RUN apt-get -y install sendmail sendmail-cf mailutils
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+--mount=type=cache,target=/var/cache/apt \
+set -e; \
+apt-get update; \
+apt-get install -y --no-install-recommends sendmail-base sendmail-bin sendmail-cf mailutils
 
 # Test Scriptのコピー
 #RUN mkdir /opt/scripts
@@ -92,9 +162,11 @@ RUN echo '  insteadOf = "git://github.com/"' >> ~/.gitconfig
 RUN git clone -b master git://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 #RUN git clone -b master https://github.com/NetCommons3/NetCommons3 /opt/nc3.dist
 
-ARG COMPOSER_TOKEN
-RUN cd /opt/nc3.dist && \
-COMPOSER_ALLOW_SUPERUSER=1 composer config --global -a github-oauth.github.com ${COMPOSER_TOKEN}
+#ARG COMPOSER_TOKEN
+RUN --mount=type=secret,id=composer_token \
+COMPOSER_TOKEN=$(cat /run/secrets/composer_token) && \
+cd /opt/nc3.dist && \
+COMPOSER_ALLOW_SUPERUSER=1 composer config --global -a github-oauth.github.com "$COMPOSER_TOKEN"
 
 RUN cd /opt/nc3.dist && \
 composer config minimum-stability dev && \
@@ -105,5 +177,8 @@ composer config repositories.2 git https://github.com/NetCommons3/migrations.git
 
 RUN cd /opt/nc3.dist && \
 rm composer.lock && \
-composer install --no-scripts --no-ansi --no-interaction && \
+COMPOSER_ALLOW_SUPERUSER=1 composer install --no-scripts --no-ansi --no-interaction && \
 git checkout composer.lock
+
+RUN cd /opt/nc3.dist && \
+COMPOSER_ALLOW_SUPERUSER=1 composer config --global --unset github-oauth.github.com
